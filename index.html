@@ -429,5 +429,37 @@ animate(0);
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
 		</script>
+    <!-- Generating Summary -->
+    <script charset="utf-8">
+      var titles = document.querySelectorAll('section.stack');
+      var summary = document.querySelector('#summary');
+      var summary_list = document.createElement('ul');
+      var summary_has_sublevels = false;
+
+      for (sec of titles) {
+        var summary_item = document.createElement('li');
+        let sectitle = sec.querySelector('section > h2'); 
+        if (sectitle) {
+          summary_item.innerText = sectitle.innerText;
+          summary_list.appendChild(summary_item);
+        } 
+        if (summary_has_sublevels) {
+          let subsectitles = sec.querySelectorAll('section > h3'); 
+          var summary_sublist = document.createElement('ul');
+          for (let sub of subsectitles) {
+            var summary_subitem = document.createElement('li');
+            summary_subitem.innerText = sub.innerText;
+            summary_sublist.appendChild(summary_subitem);
+          }
+          if (subsectitles) {
+            summary_list.appendChild(summary_sublist);
+          }
+        }
+      }
+      if (titles) {
+        summary.appendChild(summary_list);
+      }
+    </script>
+
 	</body>
 </html>
